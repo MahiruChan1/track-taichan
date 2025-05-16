@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tracking...</title>
+  <meta charset="UTF-8" />
+</head>
+<body>
+  <h3>Mendeteksi lokasi...</h3>
+  <script>
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const data = {
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude
+        };
+        await fetch('/api/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        document.body.innerHTML = "<h3>Terima kasih, lokasi dikirim!</h3>";
+      }, () => {
+        document.body.innerHTML = "<h3>Gagal mendapatkan lokasi.</h3>";
+      });
+    } else {
+      document.body.innerHTML = "<h3>Browser tidak mendukung geolokasi.</h3>";
+    }
+  </script>
+</body>
+</html>
