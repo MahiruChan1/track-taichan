@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Lokasi</title>
+  <meta charset="UTF-8" />
+</head>
+<body>
+  <h2>Data Lokasi</h2>
+  <table border="1">
+    <thead>
+      <tr><th>IP</th><th>Latitude</th><th>Longitude</th><th>Waktu</th></tr>
+    </thead>
+    <tbody id="tabel-lokasi"></tbody>
+  </table>
+
+  <script>
+    fetch('/api/track')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('tabel-lokasi');
+        data.forEach(item => {
+          const row = `<tr>
+            <td>${item.ip}</td>
+            <td>${item.latitude}</td>
+            <td>${item.longitude}</td>
+            <td>${item.waktu}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      });
+  </script>
+</body>
+</html>
